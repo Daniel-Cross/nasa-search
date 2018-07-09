@@ -48,7 +48,11 @@ const Button = styled.button`
 
 const Search = ({ value, onChange }) => (
   <SearchWrapper>
-    <Input value={value} onChange={onChange} />
+    <Input
+      placeholder="enter a search term"
+      value={value}
+      onChange={onChange}
+    />
     <Button>
       <MdSearch />
     </Button>
