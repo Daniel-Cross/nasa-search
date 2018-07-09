@@ -15,10 +15,19 @@ const AppWrapper = styled.div`
 `;
 
 class App extends Component {
+  state = {
+    query: '',
+  };
+
+  handleSearchChange = event => this.setState({ query: event.target.value });
+
   render() {
+    const { handleSearchChange } = this;
+    const { query } = this.state;
+
     return (
       <AppWrapper>
-        <Search />
+        <Search value={query} onChange={handleSearchChange} />
         <Switch>
           <Route path="/" render={props => <Landing {...props} />} />
         </Switch>
