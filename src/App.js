@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Search from './components/Search';
 import Landing from './pages/Landing';
+import SearchResults from './pages/SearchResults';
 
 const AppWrapper = styled.div`
   display: flex;
@@ -24,16 +26,30 @@ class App extends Component {
   render() {
     const { handleSearchChange } = this;
     const { query } = this.state;
+    const { history } = this.props;
 
     return (
       <AppWrapper>
-        <Search value={query} onChange={handleSearchChange} />
+        <Search
+          value={query}
+          onChange={handleSearchChange}
+          onSearch={() => history.push(`/search?q=${query}`)}
+        />
         <Switch>
-          <Route path="/" render={props => <Landing {...props} />} />
+          <Route exact path="/" render={props => <Landing {...props} />} />
+          <Route
+            exact
+            path="/search"
+            render={props => <SearchResults {...props} />}
+          />
         </Switch>
       </AppWrapper>
     );
   }
 }
 
-export default App;
+App.propTypes = {
+  history: PropTypes.shape({}),
+};
+
+export default withRouter(App);
