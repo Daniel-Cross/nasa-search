@@ -18,9 +18,7 @@ class ResultsWrapper extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.results === null) {
-      this.getResults();
-    }
+    this.getResults();
   }
 
   getResults = () => {
@@ -32,8 +30,9 @@ class ResultsWrapper extends Component {
       .then(({ data: { collection: { items } } }) => {
         const imageItems = this.getImageResults(items);
         const transformedItems = this.transformResults(imageItems);
+        const paginatedItems = this.paginateResults(transformedItems);
 
-        this.updateResults(transformedItems);
+        this.updateResults(paginatedItems);
       })
       .catch(err => console.error(err));
   };
@@ -56,9 +55,19 @@ class ResultsWrapper extends Component {
 
   updateResults = items => this.setState({ results: items });
 
+  paginateResults = items => {
+    const { currentPage, limit } = this.props;
+
+    return items.slice(currentPage - 1, limit);
+  };
+
   render() {
     const { results } = this.state;
     const { component: Child, ...props } = this.props;
+
+    if (!results) {
+      return null;
+    }
 
     return (
       <Fragment>
@@ -69,8 +78,13 @@ class ResultsWrapper extends Component {
 }
 
 ResultsWrapper.propTypes = {
-  component: PropTypes.oneOf([PropTypes.element, PropTypes.func]).isRequired,
+  component: PropTypes.oneOfType([
+    PropTypes.instanceOf(Component),
+    PropTypes.func,
+  ]).isRequired,
   location: PropTypes.shape({}),
+  currentPage: PropTypes.number.isRequired,
+  limit: PropTypes.number.isRequired,
 };
 
 export const withResults = component =>
