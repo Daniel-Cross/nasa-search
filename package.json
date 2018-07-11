@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "polished": "^1.9.3",
+    "query-string": "^6.1.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-icons": "^2.2.7",
