@@ -69,7 +69,7 @@ class ResultsWrapper extends Component {
 }
 
 ResultsWrapper.propTypes = {
-  component: PropTypes.element.isRequired,
+  component: PropTypes.oneOf([PropTypes.element, PropTypes.func]).isRequired,
   location: PropTypes.shape({}),
 };
 

@@ -26,7 +26,7 @@ class PaginationWrapper extends Component {
 }
 
 PaginationWrapper.propTypes = {
-  component: PropTypes.element.isRequired,
+  component: PropTypes.oneOf([PropTypes.element, PropTypes.func]).isRequired,
 };
 
 export const withPagination = component => props => ( // eslint-disable-line
