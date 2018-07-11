@@ -46,14 +46,15 @@ const Button = styled.button`
   }
 `;
 
-const Search = ({ value, onChange }) => (
+const Search = ({ value, onChange, onSearch }) => (
   <SearchWrapper>
     <Input
       placeholder="enter a search term"
       value={value}
       onChange={onChange}
+      onKeyPress={e => (e.key === 'Enter' ? onSearch() : null)}
     />
-    <Button>
+    <Button onClick={onSearch}>
       <MdSearch />
     </Button>
   </SearchWrapper>
@@ -62,6 +63,7 @@ const Search = ({ value, onChange }) => (
 Search.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default Search;
