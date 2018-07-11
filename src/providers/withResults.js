@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
+import qs from 'qs';
 import axios from 'axios';
 
 /**
@@ -23,7 +23,7 @@ class ResultsWrapper extends Component {
 
   getResults = () => {
     const { location } = this.props;
-    const { q: query } = queryString.parse(location.search);
+    const { q: query } = qs.parse(location.search.slice(1));
 
     axios
       .get(`https://images-api.nasa.gov/search?q=${query}`)
